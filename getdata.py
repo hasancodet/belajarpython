@@ -4,16 +4,16 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
-ip =''
+ip = ''
 def nganu(ip):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--proxy-server=%s' % ip)
 
     chrome = webdriver.Chrome(options=chrome_options)
-    chrome.get("https://www.whatismyip.com/")
-    time.sleep(5)
-    chrome.get("https:google.com")
-    time.sleep(5)
+    chrome.get("https://www.youtube.com/watch?v=acfjeBZxdig")
+    time.sleep(10)
+    chrome.get("https://www.youtube.com/watch?v=w7Gz5djWV4Y")
+    time.sleep(400)
 
 def cekip():
     url = 'https://free-proxy-list.net/'
@@ -33,7 +33,7 @@ def cekip():
         if(data[6] == "yes"):
             ip = data[0]+":"+data[1]
             break
-
+    return ip
 while(True):
-    cekip()
+    ip = cekip()
     nganu(ip)
