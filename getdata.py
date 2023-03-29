@@ -1,29 +1,39 @@
+from selenium import webdriver
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
 
-url = 'https://free-proxy-list.net/'
+ip =''
+def nganu(ip):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--proxy-server=%s' % ip)
 
-page = requests.get(url)
+    chrome = webdriver.Chrome(options=chrome_options)
+    chrome.get("https://www.whatismyip.com/")
+    time.sleep(5)
+    chrome.get("https:google.com")
+    time.sleep(5)
 
-soup = BeautifulSoup(page.text, 'lxml')
-#print(soup)
+def cekip():
+    url = 'https://free-proxy-list.net/'
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, 'lxml')
+    datas = []
+    table = soup.find('table', attrs={'class':'table'})
+    table_body = table.find('tbody')
+    rows = table_body.find_all('tr')
 
-datas = []
-table = soup.find('table', attrs={'class':'table'})
-table_body = table.find('tbody')
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        datas.append([ele for ele in cols if ele]) # Get rid of empty values
+        
+    for data in datas:
+        if(data[6] == "yes"):
+            ip = data[0]+":"+data[1]
+            break
 
-rows = table_body.find_all('tr')
-for row in rows:
-    cols = row.find_all('td')
-    cols = [ele.text.strip() for ele in cols]
-    datas.append([ele for ele in cols if ele]) # Get rid of empty values
-
-for data in datas:
-    if(data[6] == "no"):
-        print("no")
-    else:
-        ip = data[0]+":"+data[1]
-        print(ip)
-        break
-        #print("yes")
+while(True):
+    cekip()
+    nganu(ip)
