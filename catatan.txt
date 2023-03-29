@@ -1,0 +1,3 @@
+https://www.youtube.com/watch?v=w7Gz5djWV4Y
+
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_CONNECTION_RESET
