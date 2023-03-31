@@ -1,6 +1,18 @@
+from selenium import webdriver
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
+
+def nganu(ip):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--proxy-server=%s' % ip)
+
+    chrome = webdriver.Chrome(options=chrome_options)
+    chrome.get("https://www.youtube.com/watch?v=acfjeBZxdig")
+    time.sleep(10)
+    chrome.get("https://www.youtube.com/watch?v=w7Gz5djWV4Y")
+    time.sleep(400)
 
 def cekip():
     url = 'https://free-proxy-list.net/'
@@ -23,4 +35,6 @@ def cekip():
     return ips
     
 ips = cekip()
-print(list.count(ips))
+
+for ip in ips:
+    nganu(ip)
