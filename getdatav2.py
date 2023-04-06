@@ -1,18 +1,23 @@
 from selenium import webdriver
+#from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
-def nganu(ip):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--proxy-server=%s' % ip)
+urlpancingan = "https://whoer.net/"
+#urlpancingan = "https://www.youtube.com/watch?v=acfjeBZxdig"
+urltarget = "https://www.youtube.com/watch?v=w7Gz5djWV4Y"
 
-    chrome = webdriver.Chrome(options=chrome_options)
-    chrome.get("https://www.youtube.com/watch?v=acfjeBZxdig")
-    time.sleep(10)
-    chrome.get("https://www.youtube.com/watch?v=w7Gz5djWV4Y")
-    time.sleep(400)
+def nganu(ip):
+    
+    if(cekipdulu(urlpancingan) == True):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--proxy-server=%s' % ip)
+        chrome = webdriver.Chrome(options=chrome_options)
+        chrome.get(urlpancingan)
+        time.sleep(30)
 
 def cekip():
     url = 'https://free-proxy-list.net/'
@@ -33,8 +38,18 @@ def cekip():
             ip = data[0]+":"+data[1]
             ips.append(ip)
     return ips
-    
-ips = cekip()
 
-for ip in ips:
+def cekipdulu(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, 'lxml')
+    table = soup.find('div', attrs={'class':'error-code'})
+    return(pd.isnull(table))
+
+
+#mulai eksekusi
+ips = cekip()
+ips5 = ips[0:5]
+for ip in ips5:    
+    #cekipdulu(urlpancingan)
     nganu(ip)
+
