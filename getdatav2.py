@@ -6,12 +6,11 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
-urlpancingan = "https://whoer.net/"
-#urlpancingan = "https://www.youtube.com/watch?v=acfjeBZxdig"
-urltarget = "https://www.youtube.com/watch?v=w7Gz5djWV4Y"
+#urlpancingan = "https://whoer.net/"
+urlpancingan = "https://www.youtube.com/watch?v=acfjeBZxdig"
+#urltarget = "https://www.youtube.com/watch?v=w7Gz5djWV4Y"
 
 def nganu(ip):
-    
     if(cekipdulu(urlpancingan) == True):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--proxy-server=%s' % ip)
